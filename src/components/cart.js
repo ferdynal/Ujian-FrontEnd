@@ -147,6 +147,7 @@ class CustomPaginationActionsTable extends React.Component {
     .then((res) => {
       var cookie = Cookies.get('userData')
         this.getDataApi(cookie)
+        this.getCartValue()
         swal("Delete Success", "Product is Delete", "success")
         
     })

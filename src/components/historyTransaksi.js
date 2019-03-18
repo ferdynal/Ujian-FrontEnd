@@ -21,7 +21,7 @@ import swal from 'sweetalert';
 import {connect} from 'react-redux';
 import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
-import {setUserCart} from '../1.actions/userCartAction'
+// import {setUserCart} from '../1.actions/userCartAction'
 
 const actionsStyles = theme => ({
   root: {
@@ -128,7 +128,7 @@ class CustomPaginationActionsTable extends React.Component {
 
   componentDidMount(){
     this.getDataApi()
-    this.getCartValue()
+    // this.getCartValue()
   }
 
   getDataApi = () => {
@@ -150,11 +150,11 @@ class CustomPaginationActionsTable extends React.Component {
      return harga
   }
 
-  getCartValue = () => {
-    Axios.get(urlApi+'/cart')
-    .then(res => this.props.setUserCart(res.data.length))
-    .catch((err) => console.log(err))
-}
+//   getCartValue = () => {
+//     Axios.get(urlApi+'/cart')
+//     .then(res => this.props.setUserCart(res.data.length))
+//     .catch((err) => console.log(err))
+// }
 
   renderJsx = () => {
     var jsx = this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
@@ -164,7 +164,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell>{val.userId}</TableCell>
                     <TableCell>{val.date}</TableCell>
                     <TableCell>{val.listCart.length}</TableCell>
-                    <TableCell>Rp. {this.totalHistory(val.listCart)}</TableCell>
+                    <TableCell><CurrencyFormat value={this.totalHistory(val.listCart)} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
                     <TableCell>
                         <Button animated color='blue' onClick={() => this.setState({openModal: !this.state.openModal, indexItem: index})}>
                         <Button.Content visible>Detail</Button.Content>
@@ -269,7 +269,7 @@ class CustomPaginationActionsTable extends React.Component {
                 <TableHead>
                   <TableRow>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Nama Produk</TableCell>
-                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Jumlah</TableCell>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Jumlah Qty</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Harga</TableCell>
                   </TableRow> 
                 </TableHead>
@@ -278,7 +278,7 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableRow key={index}>
                     <TableCell>{val.namaProduk}</TableCell>
                     <TableCell>{val.quantity}</TableCell>
-                    <TableCell>{val.harga}</TableCell>
+                    <TableCell><CurrencyFormat value={val.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
@@ -303,4 +303,4 @@ const mapStateToProps = (state) => {
   }  
 }
 
-export default connect(mapStateToProps, {setUserCart})(withStyles(styles)(CustomPaginationActionsTable));
+export default connect(mapStateToProps)(withStyles(styles)(CustomPaginationActionsTable));

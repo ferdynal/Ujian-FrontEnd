@@ -39,7 +39,6 @@ class ProductDetail extends React.Component {
     }
 
     onBtnAddToCart = () => {
-
         var newData = {
             username: this.props.obj,
             userId: this.props.id,
@@ -51,7 +50,6 @@ class ProductDetail extends React.Component {
             quantity : parseInt(this.refs.inputQty.value)
         }
     
-
         Axios.get(urlApi+'/cart?userId='+this.props.id+'&namaProduk='+newData.namaProduk)
                  .then((res) => {
                      var filterData = res.data.filter(data => data.namaProduk === newData.namaProduk);

@@ -95,7 +95,14 @@ class ProductList extends React.Component{
                     }
 
                     <CurrencyFormat value={val.harga - (val.harga*(val.discount/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} renderText={value => <p className="card-text mr-5" style={{display:'inline',fontWeight:'700'}}>{value}</p>}/>
-                    <input type="button" className="d-block btn btn-success mt-2" onClick={() => this.onBtnAddToCart(val)} value="Add to Cart"/>
+                    
+                    { 
+                        this.props.username === '' ?
+                        <Link to = '/login'><input type="button" className="d-block btn btn-success mt-2" value="Add to Cart"/></Link>
+                        :
+                        <input type="button" className="d-block btn btn-success mt-2" onClick={() => this.onBtnAddToCart(val)} value="Add to Cart"/>
+                    }
+
                     </div>
                 </div>
             )
