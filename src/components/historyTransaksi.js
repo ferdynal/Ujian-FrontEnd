@@ -21,7 +21,6 @@ import swal from 'sweetalert';
 import {connect} from 'react-redux';
 import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
-// import {setUserCart} from '../1.actions/userCartAction'
 
 const actionsStyles = theme => ({
   root: {
@@ -149,12 +148,6 @@ class CustomPaginationActionsTable extends React.Component {
      }
      return harga
   }
-
-//   getCartValue = () => {
-//     Axios.get(urlApi+'/cart')
-//     .then(res => this.props.setUserCart(res.data.length))
-//     .catch((err) => console.log(err))
-// }
 
   renderJsx = () => {
     var jsx = this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
