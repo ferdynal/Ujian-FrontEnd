@@ -38,13 +38,13 @@
       "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//95/MTA-3025876/puma_puma-men-future-19-4-firm-ground-sepatu-sepakbola--105545-02-_full02.jpg"
     },
     {
-      "id": 3,
       "nama": "Umbro Pro Training Jersey",
       "harga": 429000,
-      "category": "Jersey",
       "discount": 0,
+      "category": "Jersey",
+      "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//89/MTA-2722075/umbro_umbro-pro-training-jersey-olahraga-pria---blue--64338u-ebt-_full06.jpg",
       "deskripsi": "Material : Polyester",
-      "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/umbro_umbro-pro-training-jersey-64338u-ebt_full01.jpg"
+      "id": 3
     },
     {
       "nama": "Elfs Shop Nilon Spandek Garis",
@@ -63,26 +63,65 @@
       "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2829342/nike_nike-360-big-mouth-graphic-water-botol-minum--22-oz--n-ob-g5-058-_full02.jpg",
       "deskripsi": "Material : Polyethylene, thermoplastic rubber, dan thermoplastic polyurethane",
       "id": 5
-    }
-  ],
-  "cart": [
+    },
     {
-      "username": "Budi",
-      "userId": 2,
-      "namaProduk": "Umbro Veloce II IC",
-      "harga": 599000,
-      "discount": 20,
-      "category": "Sepatu Sepakbola",
-      "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//868/umbro_umbro-veloce-ii-ic-sepatu-sepakbola_full02.jpg",
-      "quantity": 100,
-      "id": 1
+      "nama": "Super Soccer",
+      "harga": 300000,
+      "discount": null,
+      "category": "Tas Duffle Olahraga",
+      "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//89/MTA-3023818/super-soccer_super-soccer-tas-duffle-olahraga_full02.jpg",
+      "deskripsi": "Material : Polyester",
+      "id": 6
     }
   ],
+  "cart": [],
   "history": [
     {
-      "id":1, "userId": 1, "tanggal": "10-10-2019", "item": [
-        {"id":1,"namaProduk": "Umbro Pro Training Jersey", "harga": 20000, "qty": 5}
-      ]
+      "date": "2019-03-18",
+      "userId": 1,
+      "listCart": [
+        {
+          "username": "Budi",
+          "userId": 2,
+          "namaProduk": "Umbro Veloce II IC",
+          "harga": 599000,
+          "discount": 20,
+          "category": "Sepatu Sepakbola",
+          "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//868/umbro_umbro-veloce-ii-ic-sepatu-sepakbola_full02.jpg",
+          "quantity": 1,
+          "id": 1
+        }
+      ],
+      "id": 1
+    },
+    {
+      "date": "2019-03-18",
+      "userId": 1,
+      "listCart": [
+        {
+          "username": "Budi",
+          "userId": 2,
+          "namaProduk": "PUMA Men Future 19.4 Firm Ground",
+          "harga": 799000,
+          "discount": 20,
+          "category": "Sepatu Sepakbola ",
+          "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//95/MTA-3025876/puma_puma-men-future-19-4-firm-ground-sepatu-sepakbola--105545-02-_full02.jpg",
+          "quantity": 1,
+          "id": 1
+        },
+        {
+          "username": "Budi",
+          "userId": 2,
+          "namaProduk": "Elfs Shop Nilon Spandek Garis",
+          "harga": 50000,
+          "discount": 27,
+          "category": "Kaos Kaki Sepak Bola Panjang ",
+          "img": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//94/MTA-1744663/elfs-shop_elfs-shop-nilon-spandek-garis-kaos-kaki-sepak-bola-panjang-pria---hitam--hf10a-_full03.jpg",
+          "quantity": 1,
+          "id": 2
+        }
+      ],
+      "id": 2
     }
   ]
 }

@@ -273,7 +273,7 @@ class CustomPaginationActionsTable extends React.Component {
     .then((res) => {
       console.log(res)
       const newData = {
-        date: new Date(),
+        date: new Date().toISOString().slice(0,10),
         userId: res.data[0].id,
         listCart: res.data
       }
