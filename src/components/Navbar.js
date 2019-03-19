@@ -3,7 +3,7 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Un
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import terserah from 'universal-cookie';
-import { resetUser } from './../1.actions';
+import { resetUser, countcart } from './../1.actions';
 import Axios from 'axios';
 import { urlApi } from '../support/urlApi';
 import {setUserCart} from '../1.actions/userCartAction';
@@ -29,6 +29,8 @@ class HeaderKu extends Component{
     onBtnLogout = () => {
         objCookie.remove('userData')
         this.props.resetUser()
+        this.props.setUserCart(0)
+        this.props.countcart(0)
     }
 
     getCartValue = () => {
@@ -90,7 +92,7 @@ class HeaderKu extends Component{
                                         {
                                             this.props.role === 'user'
                                             ?
-                                            <Link to="/cart"><NavLink className="btn btn-default border-primary" style={{fontSize:"14px"}}><i class="fas fa-shopping-cart"></i> ({this.props.userCart}) Carts</NavLink></Link>
+                                            <Link to="/cart"><NavLink className="btn btn-default border-primary" style={{fontSize:"14px"}}><i class="fas fa-shopping-cart"></i>{this.props.jumlahcart} Carts</NavLink></Link>
                                             : null
                                         }
                                     </NavItem>
@@ -134,8 +136,9 @@ const mapStateToProps = (state) => {
     return {
         bebas : state.user.username,
         role: state.user.role,
-        userCart: state.userCart.userCart
+        userCart: state.userCart.userCart,
+        jumlahcart :  state.countcart.cart
     }
 }
 
-export default connect(mapStateToProps, {resetUser,setUserCart})(HeaderKu);
+export default connect(mapStateToProps, {resetUser,setUserCart,countcart})(HeaderKu);

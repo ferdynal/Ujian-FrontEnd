@@ -10,17 +10,17 @@ import ProductDetail from './components/productDetail'
 import ScrollToTop from './components/scrollToTop'
 import History from './components/historyTransaksi'
 import Cart from './components/cart'
+
 // withRoutier untuk tersambung ke reducer dengan connect, tapi di dalam komponen ada routing
 import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import cookie from 'universal-cookie'
-import { keepLogin, cookieChecked, setUserCart } from './1.actions'
-
-
+import { keepLogin, cookieChecked } from './1.actions'
 import './App.css';
 
 const objCookie = new cookie()
 class App extends Component {
+
   componentDidMount() {
     var terserah = objCookie.get('userData')
     if(terserah !== undefined) {
@@ -49,17 +49,18 @@ class App extends Component {
           </Switch>
           </ScrollToTop>          
       </div>
-    );
+      );
+    }else{
+      return <div>Loading...</div>
+    }
   }
-  return <div>Loading...</div>
-}
 }
 
-const mapStateToProps = (state)=> {
-  return{
-    cookie : state.user.cookie,
-    id : state.user.id
-  }
+const mapStateToProps = (state) => {
+  return {
+    cookie: state.user.cookie
+  }  
 }
-export default withRouter(connect(mapStateToProps, {keepLogin, cookieChecked, setUserCart})(App));
+
+export default withRouter(connect(mapStateToProps, {keepLogin,cookieChecked})(App));
 

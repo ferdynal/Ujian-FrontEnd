@@ -5,3 +5,10 @@ export const setUserCart = (cart) => {
         type: USER_CART, payload: cart
     }
 }
+
+export const countcart = (param)=>{
+    return {
+        type: "COUNT_CART", payload: param
+    }
+    
+}

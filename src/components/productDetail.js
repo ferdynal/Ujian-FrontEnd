@@ -59,7 +59,7 @@ class ProductDetail extends React.Component {
                              .then((res) =>{
                                  console.log(res)
                                  this.getCartValue();
-                                 swal('Success', 'Item added to cart', 'success')
+                                 swal('Success', 'Item added to Cart', 'success')
                              })
                              .catch((err) => {
                                  console.log(err)
@@ -70,7 +70,7 @@ class ProductDetail extends React.Component {
                              .then((res) =>{
                                  console.log(res)
                                  this.getCartValue();
-                                 swal('Success', 'Item added to cart', 'success')
+                                 swal('Success', 'Item added to Cart', 'success')
                              })
                              .catch((err) => {
                                  console.log(err)

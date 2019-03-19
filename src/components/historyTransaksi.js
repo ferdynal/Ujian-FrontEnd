@@ -21,7 +21,6 @@ import swal from 'sweetalert';
 import {connect} from 'react-redux';
 import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
-// import {setUserCart} from '../1.actions/userCartAction'
 
 const actionsStyles = theme => ({
   root: {
@@ -150,30 +149,24 @@ class CustomPaginationActionsTable extends React.Component {
      return harga
   }
 
-//   getCartValue = () => {
-//     Axios.get(urlApi+'/cart')
-//     .then(res => this.props.setUserCart(res.data.length))
-//     .catch((err) => console.log(err))
-// }
-
   renderJsx = () => {
     var jsx = this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
     .map((val, index) => {
         return(
-            <TableRow key={val.id}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{val.date}</TableCell>
-                    <TableCell>{val.listCart.length}</TableCell>
-                    <TableCell><CurrencyFormat value={this.totalHistory(val.listCart)} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
-                    <TableCell>
-                        <Button animated color='blue' onClick={() => this.setState({openModal: !this.state.openModal, indexItem: index})}>
-                        <Button.Content visible>Detail</Button.Content>
-                        <Button.Content hidden>
-                            <Icon name='search plus' />
-                        </Button.Content>
-                        </Button>
-                    </TableCell>
-                    </TableRow>
+          <TableRow key={val.id}>
+            <TableCell>{index + 1}</TableCell>
+            <TableCell>{val.date}</TableCell>
+            <TableCell>{val.listCart.length}</TableCell>
+            <TableCell><CurrencyFormat value={this.totalHistory(val.listCart)} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
+            <TableCell>
+                <Button animated color='blue' onClick={() => this.setState({openModal: !this.state.openModal, indexItem: index})}>
+                <Button.Content visible>Detail</Button.Content>
+                <Button.Content hidden>
+                    <Icon name='search plus' />
+                </Button.Content>
+                </Button>
+            </TableCell>
+          </TableRow>
         )
     })
     return jsx
@@ -224,7 +217,7 @@ class CustomPaginationActionsTable extends React.Component {
             <Paper className={classes.root}>
             <div className={classes.tableWrapper}>
             <Table className={classes.table}>
-                <TableHead>
+              <TableHead>
                   <TableRow>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>NO.</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>TANGGAL</TableCell>
@@ -285,7 +278,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell>{val.discount}%</TableCell>
                     <TableCell>{val.quantity}</TableCell>
                     <TableCell><CurrencyFormat value={val.harga - (val.harga*(val.discount/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
-                    </TableRow>
+                  </TableRow>
                 ))}
                 </TableBody>
             </Table>

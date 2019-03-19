@@ -23,6 +23,7 @@ import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
 import cookie from 'universal-cookie';
 import {setUserCart} from '../1.actions/userCartAction'
+import { countcart} from '../1.actions'
 import { Link } from 'react-router-dom';
 
 const Cookies = new cookie()
@@ -128,14 +129,17 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   componentDidMount(){
-    var cookie = Cookies.get('userData')
-    this.getDataApi(cookie)
+    this.getDataApi()
   }
 
-  getDataApi = (nama) => {
-      Axios.get(urlApi + '/cart?username=' + nama)
-      .then((res) => 
-        this.setState({rows : res.data}))
+  getDataApi = () => {
+      Axios.get(urlApi + '/cart?username=' + this.props.username)
+      .then((res) => {
+        this.setState({rows : res.data})
+        var a = this.state.rows.length
+        this.props.countcart(a)
+        }
+      )
       .catch((err) => console.log(err))
   }
 
@@ -167,54 +171,54 @@ class CustomPaginationActionsTable extends React.Component {
     .map((val,index) => {
       
         return(
-            <TableRow key={val.id}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell component="th" scope="row">
-                  {val.namaProduk}
-              </TableCell>
-              <TableCell><CurrencyFormat value={val.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
-              <TableCell>{val.discount}%</TableCell>
-              <TableCell>
-                {this.state.editItem === index && this.state.isEdit === true ? (
-                <input type='number' onChange={this.qtyValidation} min={1} className='form-control' ref='editValue' defaultValue={val.quantity} style={{width:'70px'}}/>
-                ) : val.quantity}
-              </TableCell>
-              <TableCell>  
-                <CurrencyFormat value={val.harga - (val.harga*(val.discount/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/>
-              </TableCell>
-              <TableCell>
-                  <Button 
-                  animated 
-                  color= {this.state.isEdit === true && this.state.editItem === index ? 'green' : 'blue'}
-                  onClick={() => 
-                    this.state.isEdit === true && this.state.editItem === index ? this.onBtnSave(index) : this.onBtnEditClick(index)}>
-                  <Button.Content visible>
-                    {
-                      this.state.isEdit === true && this.state.editItem === index ? 'Save' : 'Edit'
-                    }
-                  </Button.Content>
-                  <Button.Content hidden>
-                    {
-                      this.state.isEdit === true && this.state.editItem === index ? <Icon name='save' /> : <Icon name='edit' />
-                    }
-                  </Button.Content>
-                  </Button>
-                  <Button 
-                  animated 
-                  color='red' 
-                  onClick={() => 
-                    this.state.isEdit === true && this.state.editItem === index ? this.onBtnCancel() : this.onBtnDelete(val.id)}>
-                  <Button.Content visible>
-                    {
-                      this.state.isEdit === true && this.state.editItem === index ? 'Cancel' : 'Delete'
-                    }
-                  </Button.Content>
-                  <Button.Content hidden>
-                      <Icon name='delete' />
-                  </Button.Content>
-                  </Button>
-              </TableCell>
-        </TableRow>
+          <TableRow key={val.id}>
+          <TableCell>{index + 1}</TableCell>
+          <TableCell component="th" scope="row">
+              {val.namaProduk}
+          </TableCell>
+          <TableCell><CurrencyFormat value={val.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
+          <TableCell>{val.discount}%</TableCell>
+          <TableCell>
+            {this.state.editItem === index && this.state.isEdit === true ? (
+            <input type='number' onChange={this.qtyValidation} min={1} className='form-control' ref='editValue' defaultValue={val.quantity} style={{width:'70px'}}/>
+            ) : val.quantity}
+          </TableCell>
+          <TableCell>  
+            <CurrencyFormat value={val.harga - (val.harga*(val.discount/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/>
+          </TableCell>
+          <TableCell>
+              <Button 
+              animated 
+              color= {this.state.isEdit === true && this.state.editItem === index ? 'green' : 'blue'}
+              onClick={() => 
+                this.state.isEdit === true && this.state.editItem === index ? this.onBtnSave(index) : this.onBtnEditClick(index)}>
+              <Button.Content visible>
+                {
+                  this.state.isEdit === true && this.state.editItem === index ? 'Save' : 'Edit'
+                }
+              </Button.Content>
+              <Button.Content hidden>
+                {
+                  this.state.isEdit === true && this.state.editItem === index ? <Icon name='save' /> : <Icon name='edit' />
+                }
+              </Button.Content>
+              </Button>
+              <Button 
+              animated 
+              color='red' 
+              onClick={() => 
+                this.state.isEdit === true && this.state.editItem === index ? this.onBtnCancel() : this.onBtnDelete(val.id)}>
+              <Button.Content visible>
+                {
+                  this.state.isEdit === true && this.state.editItem === index ? 'Cancel' : 'Delete'
+                }
+              </Button.Content>
+              <Button.Content hidden>
+                  <Icon name='delete' />
+              </Button.Content>
+              </Button>
+          </TableCell>
+    </TableRow>
         )
     })
     return jsx
@@ -281,8 +285,7 @@ class CustomPaginationActionsTable extends React.Component {
       for(var i=0; i < res.data.length; i++) {
         Axios.delete(urlApi + '/cart/' + res.data[i].id)
         .then ((res)=>{
-          console.log(res)
-          
+          console.log(res)          
         })
         .catch((err)=>{
           console.log(err)
@@ -317,7 +320,7 @@ class CustomPaginationActionsTable extends React.Component {
             <div className={classes.tableWrapper}>
             <Table className={classes.table}>
                 <TableHead>
-                    <TableRow>
+                  <TableRow>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>NO.</TableCell>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>NAMA</TableCell>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>HARGA</TableCell>
@@ -325,7 +328,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>QTY</TableCell>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>TOTAL</TableCell>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}></TableCell>
-                    </TableRow>       
+                    </TableRow>        
                 </TableHead>
                 <TableBody>
                 {this.renderJsx()}
@@ -402,4 +405,4 @@ const mapStateToProps = (state) => {
   }  
 }
 
-export default connect(mapStateToProps, {setUserCart})(withStyles(styles)(CustomPaginationActionsTable));
+export default connect(mapStateToProps, {setUserCart,countcart})(withStyles(styles)(CustomPaginationActionsTable));
