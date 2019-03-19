@@ -165,11 +165,11 @@ class CustomPaginationActionsTable extends React.Component {
         this.refs.editValue.value = 1
     }
 }
-
+  
   renderJsx = () => {
     var jsx = this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
     .map((val,index) => {
-      
+
         return(
           <TableRow key={val.id}>
           <TableCell>{index + 1}</TableCell>
@@ -297,6 +297,8 @@ class CustomPaginationActionsTable extends React.Component {
           console.log(res)
           this.getDataApi(this.props.username)
           this.getCartValue()
+          swal('Checkout', 'Item is Empty', 'success',)
+
         })
         .catch((err)=>{
           console.log(err)

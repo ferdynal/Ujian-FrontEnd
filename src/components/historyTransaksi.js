@@ -127,7 +127,6 @@ class CustomPaginationActionsTable extends React.Component {
 
   componentDidMount(){
     this.getDataApi()
-    // this.getCartValue()
   }
 
   getDataApi = () => {
@@ -159,7 +158,7 @@ class CustomPaginationActionsTable extends React.Component {
             <TableCell>{val.listCart.length}</TableCell>
             <TableCell><CurrencyFormat value={this.totalHistory(val.listCart)} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
             <TableCell>
-                <Button animated color='blue' onClick={() => this.setState({openModal: !this.state.openModal, indexItem: index})}>
+                <Button animated color='red' onClick={() => this.setState({openModal: !this.state.openModal, indexItem: index})}>
                 <Button.Content visible>Detail</Button.Content>
                 <Button.Content hidden>
                     <Icon name='search plus' />
@@ -175,34 +174,6 @@ class CustomPaginationActionsTable extends React.Component {
   handleChangeRowsPerPage = event => {
     this.setState({ page: 0, rowsPerPage: event.target.value });
   };
-
-  onBtnAdd = () => {
-    var namaproduk = this.nama.inputRef.value
-    var harga = parseInt(this.harga.inputRef.value)
-    var discount = parseInt(this.discount.inputRef.value)
-    var category = this.category.inputRef.value
-    var img = this.img.inputRef.value
-    var deskripsi = this.deskripsi.inputRef.value
-
-    Axios.post (urlApi + '/product', {nama : namaproduk, harga, discount, category, img, deskripsi})
-    .then((res) => {
-      swal('Add Product', 'Add Product Success', 'success',)
-      this.getDataApi()
-    })
-    .catch((err) => {
-      console.log(err)})
-      
-      this.nama.inputRef.value = ''
-      this.harga.inputRef.value =''
-      this.discount.inputRef.value = ''
-      this.category.inputRef.value = ''
-      this.img.inputRef.value = ''
-      this.deskripsi.inputRef.value = ''
-  }
-
-  onBtnEditClick = (param) => {
-    this.setState({isEdit: true, editItem: param})
-  }
 
   render() {
     const { classes } = this.props;

@@ -80,9 +80,11 @@ class ProductList extends React.Component{
                     <Link to = {'/product-detail/' + val.id} ><img src={val.img} height="280px" className="card-img-top" alt="image product" /></Link>
                     
                     {   
-                        val.discount > 0 ?
+                        val.discount > 0 
+                        ?
                         <div className="discount">{val.discount}%</div>
-                        : null
+                        : 
+                        null
                     }
                     
                     <div className="card-body">
