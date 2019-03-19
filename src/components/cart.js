@@ -23,6 +23,7 @@ import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
 import cookie from 'universal-cookie';
 import {setUserCart} from '../1.actions/userCartAction'
+import { countcart} from '../1.actions'
 
 const Cookies = new cookie()
 const actionsStyles = theme => ({
@@ -127,14 +128,18 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   componentDidMount(){
-    var cookie = Cookies.get('userData')
-    this.getDataApi(cookie)
+    this.getDataApi()
   }
 
-  getDataApi = (nama) => {
-      Axios.get(urlApi + '/cart?username=' + nama)
-      .then((res) => 
-        this.setState({rows : res.data}))
+  getDataApi = () => {
+      Axios.get(urlApi + '/cart?username=' + this.props.username)
+      .then((res) => {
+        this.setState({rows : res.data})
+        var a = this.state.rows.length
+        this.props.countcart(a)
+
+      }
+        )
       .catch((err) => console.log(err))
   }
 
@@ -382,4 +387,4 @@ const mapStateToProps = (state) => {
   }  
 }
 
-export default connect(mapStateToProps, {setUserCart})(withStyles(styles)(CustomPaginationActionsTable));
+export default connect(mapStateToProps, {setUserCart,countcart})(withStyles(styles)(CustomPaginationActionsTable));

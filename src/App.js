@@ -50,8 +50,8 @@ class App extends Component {
           </ScrollToTop>          
       </div>
       );
-    }else {
-      return <div>Loading ...</div>
+    }else{
+      return <div>Loading...</div>
     }
   }
 }
