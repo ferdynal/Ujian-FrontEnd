@@ -16,7 +16,7 @@ export const onLogin = (paramUsername,password) => {
             params:{
                     username : paramUsername, 
                     password
-                    }})
+                   }})
 
         // kalo berhasil nge get, dia masuk then
         .then((res) => {
@@ -47,6 +47,12 @@ export const onLogin = (paramUsername,password) => {
         })
     }
     
+}
+
+export const cookieChecked = () => {
+    return{
+        type : 'COOKIE_CHECKED'
+    }
 }
 
 export const keepLogin = (cookie) => {
@@ -136,11 +142,5 @@ export const loginWithGoogle = (email) => {
             }
         })
         .catch ((err) => console.log(err))
-    }
-}
-
-export const cookieChecked = () => {
-    return {
-        type: 'COOKIE_CHECKED'
     }
 }

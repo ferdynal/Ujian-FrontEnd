@@ -21,6 +21,7 @@ import swal from 'sweetalert';
 import {connect} from 'react-redux';
 import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
+// import {setUserCart} from '../1.actions/userCartAction'
 
 const actionsStyles = theme => ({
   root: {
@@ -149,12 +150,18 @@ class CustomPaginationActionsTable extends React.Component {
      return harga
   }
 
+//   getCartValue = () => {
+//     Axios.get(urlApi+'/cart')
+//     .then(res => this.props.setUserCart(res.data.length))
+//     .catch((err) => console.log(err))
+// }
+
   renderJsx = () => {
     var jsx = this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
     .map((val, index) => {
         return(
             <TableRow key={val.id}>
-                    <TableCell>{val.userId}</TableCell>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>{val.date}</TableCell>
                     <TableCell>{val.listCart.length}</TableCell>
                     <TableCell><CurrencyFormat value={this.totalHistory(val.listCart)} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
@@ -219,9 +226,9 @@ class CustomPaginationActionsTable extends React.Component {
             <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>#ID</TableCell>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>NO.</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>TANGGAL</TableCell>
-                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>JUMLAH ITEM</TableCell>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>ITEM</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>TOTAL</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}></TableCell>
                   </TableRow> 
@@ -261,17 +268,23 @@ class CustomPaginationActionsTable extends React.Component {
             <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>No.</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Nama Produk</TableCell>
-                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Jumlah Qty</TableCell>
                     <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Harga</TableCell>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Disc</TableCell>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Qty</TableCell>
+                    <TableCell style={{fontSize:'15px', fontWeight:'600'}}>Total</TableCell>
                   </TableRow> 
                 </TableHead>
                 <TableBody>
                 {this.state.rows[this.state.indexItem].listCart.map((val, index) => (
                   <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>{val.namaProduk}</TableCell>
-                    <TableCell>{val.quantity}</TableCell>
                     <TableCell><CurrencyFormat value={val.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
+                    <TableCell>{val.discount}%</TableCell>
+                    <TableCell>{val.quantity}</TableCell>
+                    <TableCell><CurrencyFormat value={val.harga - (val.harga*(val.discount/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

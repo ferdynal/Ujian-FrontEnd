@@ -23,7 +23,7 @@ import PageNotFound from '../components/pageNotfound';
 import CurrencyFormat from 'react-currency-format';
 import cookie from 'universal-cookie';
 import {setUserCart} from '../1.actions/userCartAction'
-import { countcart} from '../1.actions'
+import { Link } from 'react-router-dom';
 
 const Cookies = new cookie()
 const actionsStyles = theme => ({
@@ -128,18 +128,14 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   componentDidMount(){
-    this.getDataApi()
+    var cookie = Cookies.get('userData')
+    this.getDataApi(cookie)
   }
 
-  getDataApi = () => {
-      Axios.get(urlApi + '/cart?username=' + this.props.username)
-      .then((res) => {
-        this.setState({rows : res.data})
-        var a = this.state.rows.length
-        this.props.countcart(a)
-
-      }
-        )
+  getDataApi = (nama) => {
+      Axios.get(urlApi + '/cart?username=' + nama)
+      .then((res) => 
+        this.setState({rows : res.data}))
       .catch((err) => console.log(err))
   }
 
@@ -153,7 +149,7 @@ class CustomPaginationActionsTable extends React.Component {
       var cookie = Cookies.get('userData')
         this.getDataApi(cookie)
         this.getCartValue()
-        swal("Delete Success", "Product is Delete", "success")
+        swal("Delete Success", "Product deleted", "success")
         
     })
     .catch((err) => console.log(err))
@@ -176,8 +172,8 @@ class CustomPaginationActionsTable extends React.Component {
               <TableCell component="th" scope="row">
                   {val.namaProduk}
               </TableCell>
-              <TableCell><img src={val.img} height='50px'/></TableCell>
-              
+              <TableCell><CurrencyFormat value={val.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '}/></TableCell>
+              <TableCell>{val.discount}%</TableCell>
               <TableCell>
                 {this.state.editItem === index && this.state.isEdit === true ? (
                 <input type='number' onChange={this.qtyValidation} min={1} className='form-control' ref='editValue' defaultValue={val.quantity} style={{width:'70px'}}/>
@@ -251,7 +247,7 @@ class CustomPaginationActionsTable extends React.Component {
     Axios.put(urlApi + '/cart/' +this.state.rows[param].id,NewData)
       .then((res) => {
           this.getDataApi(cookie)
-          swal("Edit Success", "Product has been edited", "success")
+          swal("Edit Success", "Quantity has been updated", "success")
           this.setState({isEdit : false , editItem : {}})
       })
       .catch((err) => {
@@ -285,7 +281,8 @@ class CustomPaginationActionsTable extends React.Component {
       for(var i=0; i < res.data.length; i++) {
         Axios.delete(urlApi + '/cart/' + res.data[i].id)
         .then ((res)=>{
-          console.log(res)          
+          console.log(res)
+          
         })
         .catch((err)=>{
           console.log(err)
@@ -322,29 +319,47 @@ class CustomPaginationActionsTable extends React.Component {
                 <TableHead>
                     <TableRow>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>NO.</TableCell>
-                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>ITEM</TableCell>
-                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>VIEW</TableCell>
+                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>NAMA</TableCell>
+                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>HARGA</TableCell>
+                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>DISC</TableCell>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}>QTY</TableCell>
-                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>PRICE</TableCell>
+                        <TableCell style={{fontSize:'15px', fontWeight:'600'}}>TOTAL</TableCell>
                         <TableCell style={{fontSize:'15px', fontWeight:'600'}}></TableCell>
                     </TableRow>       
                 </TableHead>
                 <TableBody>
                 {this.renderJsx()}
                 <TableRow>
-                <TableCell colSpan={5}><CurrencyFormat value={this.getTotalHarga()} displayType={'text'} thousandSeparator={true} prefix={'Total Harga : Rp. '}/></TableCell>
+                <TableCell colSpan={6}><CurrencyFormat value={this.getTotalHarga()} displayType={'text'} thousandSeparator={true} prefix={'Total Harga : Rp. '}/></TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                <TableCell></TableCell>
                   <TableCell colSpan={1}>
-                    <Button animated color ='teal' onClick={this.checkOut}>
-                        <Button.Content visible >Check Out </Button.Content>
-                        <Button.Content hidden>
-                            <Icon name='cart' />
-                        </Button.Content>
-                        </Button>
+                    <Button animated color ='blue' onClick={this.checkOut}>
+                      <Button.Content visible> Checkout Now </Button.Content>
+                      <Button.Content hidden>
+                          <Icon name='log out' />
+                      </Button.Content>
+                    </Button>
                   </TableCell>
+
+                <Link to = '/product'>
+                <TableCell colSpan={1}>
+                    <Button animated color ='green'>
+                      <Button.Content visible> Buying</Button.Content>
+                      <Button.Content hidden>
+                          <Icon name='add to cart' />
+                      </Button.Content>
+                    </Button>
+                  </TableCell>
+                </Link>
+
+                  <TableCell></TableCell>
                 </TableRow>
                 {emptyRows > 0 && (
                     <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={7} />
                     </TableRow>
                 )}
                 </TableBody>
@@ -387,4 +402,4 @@ const mapStateToProps = (state) => {
   }  
 }
 
-export default connect(mapStateToProps, {setUserCart,countcart})(withStyles(styles)(CustomPaginationActionsTable));
+export default connect(mapStateToProps, {setUserCart})(withStyles(styles)(CustomPaginationActionsTable));
