@@ -280,8 +280,7 @@ class CustomPaginationActionsTable extends React.Component {
       for(var i=0; i < res.data.length; i++) {
         Axios.delete(urlApi + '/cart/' + res.data[i].id)
         .then ((res)=>{
-          console.log(res)
-          
+          console.log(res)          
         })
         .catch((err)=>{
           console.log(err)
